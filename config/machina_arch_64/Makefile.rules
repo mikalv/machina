@@ -1,0 +1,9 @@
+CC		= gcc -std=c11
+CPP 		= g++ -std=c++11
+LD 		= ld
+
+ASFLAGS 	= 
+CCFLAGS 	= -Wall -Wextra -pedantic-errors -g
+CPPFLAGS 	= 
+LDFLAGS 	= 
+
