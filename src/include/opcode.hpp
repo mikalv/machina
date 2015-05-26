@@ -420,6 +420,11 @@ namespace machina
 		opcode_cleanup			= 0x73,
 		
 		
+		/**
+		  * @brief	Opcode of the 'out' instruction
+		  */
+		opcode_out			= 0xA0,
+		
 		
 		/**
 		  * @brief	Opcode of the 'halt' instruction

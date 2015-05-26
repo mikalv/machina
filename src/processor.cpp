@@ -501,6 +501,11 @@ void processor::step(  )
 			this->next(machina::instruction_multibyte);
 		break;
 		
+		case machina::opcode_out:
+			this->exec_out();
+			this->next(machina::instruction_byte);
+		break;
+		
 		case machina::opcode_halt:
 			this->exec_halt();
 			this->next(machina::instruction_byte);
@@ -530,28 +535,28 @@ void processor::next( machina::arch::size_t offset )
 
 void processor::exec_load_immediate_byte( machina::arch::byte_t value )
 {
-	std::cout << "load " << std::hex << value << std::endl;
+	//std::cout << "load " << std::hex << value << std::endl;
 	
 	this->data_stack.push(value);
 }
 
 void processor::exec_load_immediate_short( machina::arch::short_t value )
 {
-	std::cout << "load " << std::hex << value << std::endl;
+	//std::cout << "load " << std::hex << value << std::endl;
 
 	this->data_stack.push(value);
 }
 
 void processor::exec_load_immediate_int( machina::arch::int_t value )
 {
-	std::cout << "load " << std::hex << value << std::endl;
+	//std::cout << "load " << std::hex << value << std::endl;
 	
 	this->data_stack.push(value);
 }
 
 void processor::exec_load_immediate_long( machina::arch::long_t value )
 {
-	std::cout << "load " << std::hex << value << std::endl;
+	//std::cout << "load " << std::hex << value << std::endl;
 
 	this->data_stack.push(value);
 }
@@ -566,7 +571,7 @@ void processor::exec_load_byte(  )
 	
 	value = this->memory->read_byte(address);
 	
-	std::cout << "load " << std::hex << value << std::endl;
+	//std::cout << "load " << std::hex << value << std::endl;
 	
 	this->data_stack.push(value);
 }
@@ -581,7 +586,7 @@ void processor::exec_load_short(  )
 	
 	value = this->memory->read_short(address);
 	
-	std::cout << "load " << std::hex << value << std::endl;
+	//std::cout << "load " << std::hex << value << std::endl;
 
 	this->data_stack.push(value);
 }
@@ -596,7 +601,7 @@ void processor::exec_load_int(  )
 	
 	value = this->memory->read_int(address);
 	
-	std::cout << "load " << std::hex << value << std::endl;
+	//std::cout << "load " << std::hex << value << std::endl;
 
 	this->data_stack.push(value);
 }
@@ -611,7 +616,7 @@ void processor::exec_load_long(  )
 	
 	value = this->memory->read_long(address);
 	
-	std::cout << "load " << std::hex << value << std::endl;
+	//std::cout << "load " << std::hex << value << std::endl;
 
 	this->data_stack.push(value);
 }
@@ -623,7 +628,7 @@ void processor::exec_store_immediate_byte( machina::arch::pointer_t address )
 	value = this->data_stack.top();
 	this->data_stack.pop();
 	
-	std::cout << "store " << std::hex << value << " @ " << address << std::endl;
+	//std::cout << "store " << std::hex << value << " @ " << address << std::endl;
 
 	this->memory->write_byte(address, value);
 }
@@ -635,7 +640,7 @@ void processor::exec_store_immediate_short( machina::arch::pointer_t address )
 	value = this->data_stack.top();
 	this->data_stack.pop();
 	
-	std::cout << "store " << std::hex << value << " @ " << address << std::endl;
+	//std::cout << "store " << std::hex << value << " @ " << address << std::endl;
 
 	this->memory->write_short(address, value);
 }
@@ -647,7 +652,7 @@ void processor::exec_store_immediate_int( machina::arch::pointer_t address )
 	value = this->data_stack.top();
 	this->data_stack.pop();
 	
-	std::cout << "store " << std::hex << value << " @ " << address << std::endl;
+	//std::cout << "store " << std::hex << value << " @ " << address << std::endl;
 
 	this->memory->write_int(address, value);
 }
@@ -659,7 +664,7 @@ void processor::exec_store_immediate_long( machina::arch::pointer_t address )
 	value = this->data_stack.top();
 	this->data_stack.pop();
 	
-	std::cout << "store " << std::hex << value << " @ " << address << std::endl;
+	//std::cout << "store " << std::hex << value << " @ " << address << std::endl;
 
 	this->memory->write_long(address, value);
 }
@@ -674,7 +679,7 @@ void processor::exec_store_byte(  )
 	address = this->data_stack.top();
 	this->data_stack.pop();
 	
-	std::cout << "store " << std::hex << value << " @ " << address << std::endl;
+	//std::cout << "store " << std::hex << value << " @ " << address << std::endl;
 
 	this->memory->write_byte(address, value);
 }
@@ -689,7 +694,7 @@ void processor::exec_store_short(  )
 	address = this->data_stack.top();
 	this->data_stack.pop();
 	
-	std::cout << "store " << std::hex << value << " @ " << address << std::endl;
+	//std::cout << "store " << std::hex << value << " @ " << address << std::endl;
 
 	this->memory->write_short(address, value);
 }
@@ -704,7 +709,7 @@ void processor::exec_store_int(  )
 	address = this->data_stack.top();
 	this->data_stack.pop();
 	
-	std::cout << "store " << std::hex << value << " @ " << address << std::endl;
+	//std::cout << "store " << std::hex << value << " @ " << address << std::endl;
 
 	this->memory->write_int(address, value);
 }
@@ -719,14 +724,14 @@ void processor::exec_store_long(  )
 	address = this->data_stack.top();
 	this->data_stack.pop();
 	
-	std::cout << "store " << std::hex << value << " @ " << address << std::endl;
+	//std::cout << "store " << std::hex << value << " @ " << address << std::endl;
 
 	this->memory->write_long(address, value);
 }
 
 void processor::exec_inc_byte(  )
 {
-	std::cout << "inc " << std::hex << this->data_stack.top() << std::endl;
+	//std::cout << "inc " << std::hex << this->data_stack.top() << std::endl;
 	
 	machina::arch::byte_t tmp0 = this->data_stack.top();
 	this->data_stack.pop();
@@ -736,7 +741,7 @@ void processor::exec_inc_byte(  )
 
 void processor::exec_inc_short(  )
 {
-	std::cout << "inc " << std::hex << this->data_stack.top() << std::endl;
+	//std::cout << "inc " << std::hex << this->data_stack.top() << std::endl;
 	
 	machina::arch::short_t tmp0 = this->data_stack.top();
 	this->data_stack.pop();
@@ -746,7 +751,7 @@ void processor::exec_inc_short(  )
 
 void processor::exec_inc_int(  )
 {
-	std::cout << "inc " << std::hex << this->data_stack.top() << std::endl;
+	//std::cout << "inc " << std::hex << this->data_stack.top() << std::endl;
 	
 	machina::arch::int_t tmp0 = this->data_stack.top();
 	this->data_stack.pop();
@@ -756,7 +761,7 @@ void processor::exec_inc_int(  )
 
 void processor::exec_inc_long(  )
 {
-	std::cout << "inc " << std::hex << this->data_stack.top() << std::endl;
+	//std::cout << "inc " << std::hex << this->data_stack.top() << std::endl;
 	
 	machina::arch::long_t tmp0 = this->data_stack.top();
 	this->data_stack.pop();
@@ -766,7 +771,7 @@ void processor::exec_inc_long(  )
 
 void processor::exec_dec_byte(  )
 {
-	std::cout << "dec " << std::hex << this->data_stack.top() << std::endl;
+	//std::cout << "dec " << std::hex << this->data_stack.top() << std::endl;
 	
 	machina::arch::byte_t tmp0 = this->data_stack.top();
 	this->data_stack.pop();
@@ -776,7 +781,7 @@ void processor::exec_dec_byte(  )
 
 void processor::exec_dec_short(  )
 {
-	std::cout << "dec " << std::hex << this->data_stack.top() << std::endl;
+	//std::cout << "dec " << std::hex << this->data_stack.top() << std::endl;
 	
 	machina::arch::short_t tmp0 = this->data_stack.top();
 	this->data_stack.pop();
@@ -786,7 +791,7 @@ void processor::exec_dec_short(  )
 
 void processor::exec_dec_int(  )
 {
-	std::cout << "dec " << std::hex << this->data_stack.top() << std::endl;
+	//std::cout << "dec " << std::hex << this->data_stack.top() << std::endl;
 	
 	machina::arch::int_t tmp0 = this->data_stack.top();
 	this->data_stack.pop();
@@ -796,7 +801,7 @@ void processor::exec_dec_int(  )
 
 void processor::exec_dec_long(  )
 {
-	std::cout << "dec " << std::hex << this->data_stack.top() << std::endl;
+	//std::cout << "dec " << std::hex << this->data_stack.top() << std::endl;
 	
 	machina::arch::long_t tmp0 = this->data_stack.top();
 	this->data_stack.pop();
@@ -815,7 +820,7 @@ void processor::exec_add_byte(  )
 	
 	result = tmp1 + tmp0;
 	
-	std::cout << "add " << std::hex << tmp1 << "  " << tmp0 << std::endl;
+	//std::cout << "add " << std::hex << tmp1 << "  " << tmp0 << std::endl;
 	
 	this->data_stack.push(result);
 }
@@ -831,7 +836,7 @@ void processor::exec_add_short(  )
 	
 	result = tmp1 + tmp0;
 	
-	std::cout << "add " << std::hex << tmp1 << "  " << tmp0 << std::endl;
+	//std::cout << "add " << std::hex << tmp1 << "  " << tmp0 << std::endl;
 	
 	this->data_stack.push(result);
 }
@@ -847,7 +852,7 @@ void processor::exec_add_int(  )
 	
 	result = tmp1 + tmp0;
 	
-	std::cout << "add " << std::hex << tmp1 << "  " << tmp0 << std::endl;
+	//std::cout << "add " << std::hex << tmp1 << "  " << tmp0 << std::endl;
 	
 	this->data_stack.push(result);
 }
@@ -863,7 +868,7 @@ void processor::exec_add_long(  )
 	
 	result = tmp1 + tmp0;
 	
-	std::cout << "add " << std::hex << tmp1 << "  " << tmp0 << std::endl;
+	//std::cout << "add " << std::hex << tmp1 << "  " << tmp0 << std::endl;
 	
 	this->data_stack.push(result);
 }
@@ -879,7 +884,7 @@ void processor::exec_sub_byte(  )
 	
 	result = tmp1 - tmp0;
 	
-	std::cout << "sub " << std::hex << tmp1 << "  " << tmp0 << std::endl;
+	//std::cout << "sub " << std::hex << tmp1 << "  " << tmp0 << std::endl;
 
 	this->data_stack.push(result);
 }
@@ -895,7 +900,7 @@ void processor::exec_sub_short(  )
 	
 	result = tmp1 - tmp0;
 	
-	std::cout << "sub " << std::hex << tmp1 << "  " << tmp0 << std::endl;
+	//std::cout << "sub " << std::hex << tmp1 << "  " << tmp0 << std::endl;
 
 	this->data_stack.push(result);
 }
@@ -911,7 +916,7 @@ void processor::exec_sub_int(  )
 	
 	result = tmp1 - tmp0;
 	
-	std::cout << "sub " << std::hex << tmp1 << "  " << tmp0 << std::endl;
+	//std::cout << "sub " << std::hex << tmp1 << "  " << tmp0 << std::endl;
 
 	this->data_stack.push(result);
 }
@@ -927,7 +932,7 @@ void processor::exec_sub_long(  )
 	
 	result = tmp1 - tmp0;
 	
-	std::cout << "sub " << std::hex << tmp1 << "  " << tmp0 << std::endl;
+	//std::cout << "sub " << std::hex << tmp1 << "  " << tmp0 << std::endl;
 
 	this->data_stack.push(result);
 }
@@ -943,7 +948,7 @@ void processor::exec_mul_byte(  )
 	
 	result = tmp1 * tmp0;
 	
-	std::cout << "mul " << std::hex << tmp1 << "  " << tmp0 << std::endl;
+	//std::cout << "mul " << std::hex << tmp1 << "  " << tmp0 << std::endl;
 
 	this->data_stack.push(result);
 }
@@ -959,7 +964,7 @@ void processor::exec_mul_short(  )
 	
 	result = tmp1 * tmp0;
 	
-	std::cout << "mul " << std::hex << tmp1 << "  " << tmp0 << std::endl;
+	//std::cout << "mul " << std::hex << tmp1 << "  " << tmp0 << std::endl;
 
 	this->data_stack.push(result);
 }
@@ -975,7 +980,7 @@ void processor::exec_mul_int(  )
 	
 	result = tmp1 * tmp0;
 	
-	std::cout << "mul " << std::hex << tmp1 << "  " << tmp0 << std::endl;
+	//std::cout << "mul " << std::hex << tmp1 << "  " << tmp0 << std::endl;
 
 	this->data_stack.push(result);
 }
@@ -991,7 +996,7 @@ void processor::exec_mul_long(  )
 	
 	result = tmp1 * tmp0;
 	
-	std::cout << "mul " << std::hex << tmp1 << "  " << tmp0 << std::endl;
+	//std::cout << "mul " << std::hex << tmp1 << "  " << tmp0 << std::endl;
 
 	this->data_stack.push(result);
 }
@@ -1007,7 +1012,7 @@ void processor::exec_div_byte(  )
 	
 	result = tmp1 / tmp0;
 	
-	std::cout << "div " << std::hex << tmp1 << "  " << tmp0 << std::endl;
+	//std::cout << "div " << std::hex << tmp1 << "  " << tmp0 << std::endl;
 
 	this->data_stack.push(result);
 }
@@ -1023,7 +1028,7 @@ void processor::exec_div_short(  )
 	
 	result = tmp1 / tmp0;
 	
-	std::cout << "div " << std::hex << tmp1 << "  " << tmp0 << std::endl;
+	//std::cout << "div " << std::hex << tmp1 << "  " << tmp0 << std::endl;
 
 	this->data_stack.push(result);
 }
@@ -1039,7 +1044,7 @@ void processor::exec_div_int(  )
 	
 	result = tmp1 / tmp0;
 	
-	std::cout << "div " << std::hex << tmp1 << "  " << tmp0 << std::endl;
+	//std::cout << "div " << std::hex << tmp1 << "  " << tmp0 << std::endl;
 
 	this->data_stack.push(result);
 }
@@ -1055,7 +1060,7 @@ void processor::exec_div_long(  )
 	
 	result = tmp1 / tmp0;
 	
-	std::cout << "div " << std::hex << tmp1 << "  " << tmp0 << std::endl;
+	//std::cout << "div " << std::hex << tmp1 << "  " << tmp0 << std::endl;
 
 	this->data_stack.push(result);
 }
@@ -1071,7 +1076,7 @@ void processor::exec_mod_byte(  )
 	
 	result = tmp1 % tmp0;
 	
-	std::cout << "mod " << std::hex << tmp1 << "  " << tmp0 << std::endl;
+	//std::cout << "mod " << std::hex << tmp1 << "  " << tmp0 << std::endl;
 
 	this->data_stack.push(result);
 }
@@ -1087,7 +1092,7 @@ void processor::exec_mod_short(  )
 	
 	result = tmp1 % tmp0;
 	
-	std::cout << "mod " << std::hex << tmp1 << "  " << tmp0 << std::endl;
+	//std::cout << "mod " << std::hex << tmp1 << "  " << tmp0 << std::endl;
 
 	this->data_stack.push(result);
 }
@@ -1103,7 +1108,7 @@ void processor::exec_mod_int(  )
 	
 	result = tmp1 % tmp0;
 	
-	std::cout << "mod " << std::hex << tmp1 << "  " << tmp0 << std::endl;
+	//std::cout << "mod " << std::hex << tmp1 << "  " << tmp0 << std::endl;
 
 	this->data_stack.push(result);
 }
@@ -1119,7 +1124,7 @@ void processor::exec_mod_long(  )
 	
 	result = tmp1 % tmp0;
 	
-	std::cout << "mod " << std::hex << tmp1 << "  " << tmp0 << std::endl;
+	//std::cout << "mod " << std::hex << tmp1 << "  " << tmp0 << std::endl;
 
 	this->data_stack.push(result);
 }
@@ -1135,7 +1140,7 @@ void processor::exec_and_byte(  )
 	
 	result = tmp1 & tmp0;
 	
-	std::cout << "and " << std::hex << tmp1 << "  " << tmp0 << std::endl;
+	//std::cout << "and " << std::hex << tmp1 << "  " << tmp0 << std::endl;
 
 	this->data_stack.push(result);
 }
@@ -1151,7 +1156,7 @@ void processor::exec_and_short(  )
 	
 	result = tmp1 & tmp0;
 	
-	std::cout << "and " << std::hex << tmp1 << "  " << tmp0 << std::endl;
+	//std::cout << "and " << std::hex << tmp1 << "  " << tmp0 << std::endl;
 
 	this->data_stack.push(result);
 }
@@ -1167,7 +1172,7 @@ void processor::exec_and_int(  )
 	
 	result = tmp1 & tmp0;
 	
-	std::cout << "and " << std::hex << tmp1 << "  " << tmp0 << std::endl;
+	//std::cout << "and " << std::hex << tmp1 << "  " << tmp0 << std::endl;
 
 	this->data_stack.push(result);
 }
@@ -1183,7 +1188,7 @@ void processor::exec_and_long(  )
 	
 	result = tmp1 & tmp0;
 	
-	std::cout << "and " << std::hex << tmp1 << "  " << tmp0 << std::endl;
+	//std::cout << "and " << std::hex << tmp1 << "  " << tmp0 << std::endl;
 
 	this->data_stack.push(result);
 }
@@ -1199,7 +1204,7 @@ void processor::exec_or_byte(  )
 	
 	result = tmp1 | tmp0;
 	
-	std::cout << "or " << std::hex << tmp1 << "  " << tmp0 << std::endl;
+	//std::cout << "or " << std::hex << tmp1 << "  " << tmp0 << std::endl;
 
 	this->data_stack.push(result);
 }
@@ -1215,7 +1220,7 @@ void processor::exec_or_short(  )
 	
 	result = tmp1 | tmp0;
 	
-	std::cout << "or " << std::hex << tmp1 << "  " << tmp0 << std::endl;
+	//std::cout << "or " << std::hex << tmp1 << "  " << tmp0 << std::endl;
 
 	this->data_stack.push(result);
 }
@@ -1231,7 +1236,7 @@ void processor::exec_or_int(  )
 	
 	result = tmp1 | tmp0;
 	
-	std::cout << "or " << std::hex << tmp1 << "  " << tmp0 << std::endl;
+	//std::cout << "or " << std::hex << tmp1 << "  " << tmp0 << std::endl;
 
 	this->data_stack.push(result);
 }
@@ -1247,7 +1252,7 @@ void processor::exec_or_long(  )
 	
 	result = tmp1 | tmp0;
 	
-	std::cout << "or " << std::hex << tmp1 << "  " << tmp0 << std::endl;
+	//std::cout << "or " << std::hex << tmp1 << "  " << tmp0 << std::endl;
 
 	this->data_stack.push(result);
 }
@@ -1263,7 +1268,7 @@ void processor::exec_xor_byte(  )
 	
 	result = tmp1 ^ tmp0;
 	
-	std::cout << "xor " << std::hex << tmp1 << "  " << tmp0 << std::endl;
+	//std::cout << "xor " << std::hex << tmp1 << "  " << tmp0 << std::endl;
 
 	this->data_stack.push(result);
 }
@@ -1279,7 +1284,7 @@ void processor::exec_xor_short(  )
 	
 	result = tmp1 ^ tmp0;
 	
-	std::cout << "xor " << std::hex << tmp1 << "  " << tmp0 << std::endl;
+	//std::cout << "xor " << std::hex << tmp1 << "  " << tmp0 << std::endl;
 
 	this->data_stack.push(result);
 }
@@ -1295,7 +1300,7 @@ void processor::exec_xor_int(  )
 	
 	result = tmp1 ^ tmp0;
 	
-	std::cout << "xor " << std::hex << tmp1 << "  " << tmp0 << std::endl;
+	//std::cout << "xor " << std::hex << tmp1 << "  " << tmp0 << std::endl;
 
 	this->data_stack.push(result);
 }
@@ -1311,7 +1316,7 @@ void processor::exec_xor_long(  )
 	
 	result = tmp1 ^ tmp0;
 	
-	std::cout << "xor " << std::hex << tmp1 << "  " << tmp0 << std::endl;
+	//std::cout << "xor " << std::hex << tmp1 << "  " << tmp0 << std::endl;
 
 	this->data_stack.push(result);
 }
@@ -1325,7 +1330,7 @@ void processor::exec_not_byte(  )
 	
 	result = ~tmp0;
 	
-	std::cout << "not " << std::hex << tmp0 << std::endl;
+	//std::cout << "not " << std::hex << tmp0 << std::endl;
 
 	this->data_stack.push(result);
 }
@@ -1340,7 +1345,7 @@ void processor::exec_not_short(  )
 	
 	result = ~tmp0;
 	
-	std::cout << "not " << std::hex << tmp0 << std::endl;
+	//std::cout << "not " << std::hex << tmp0 << std::endl;
 
 	this->data_stack.push(result);
 }
@@ -1355,7 +1360,7 @@ void processor::exec_not_int(  )
 	
 	result = ~tmp0;
 	
-	std::cout << "not " << std::hex << tmp0 << std::endl;
+	//std::cout << "not " << std::hex << tmp0 << std::endl;
 
 	this->data_stack.push(result);
 }
@@ -1370,7 +1375,7 @@ void processor::exec_not_long(  )
 	
 	result = ~tmp0;
 	
-	std::cout << "not " << std::hex << tmp0 << std::endl;
+	//std::cout << "not " << std::hex << tmp0 << std::endl;
 
 	this->data_stack.push(result);
 }
@@ -1385,7 +1390,7 @@ void processor::exec_swap(  )
 	tmp1 = this->data_stack.top();
 	this->data_stack.pop();
 	
-	std::cout << "swap " << std::hex << tmp1 << "  " << tmp0 << std::endl;
+	//std::cout << "swap " << std::hex << tmp1 << "  " << tmp0 << std::endl;
 	
 	this->data_stack.push(tmp0);
 	this->data_stack.push(tmp1);
@@ -1398,7 +1403,7 @@ void processor::exec_dup(  )
 	tmp0 = this->data_stack.top();
 	this->data_stack.pop();
 	
-	std::cout << "dup " << std::hex << tmp0 << std::endl;
+	//std::cout << "dup " << std::hex << tmp0 << std::endl;
 	
 	this->data_stack.push(tmp0);
 	this->data_stack.push(tmp0);
@@ -1415,7 +1420,7 @@ void processor::exec_rol(  )
 	tmp2 = this->data_stack.top();
 	this->data_stack.pop();
 	
-	std::cout << "rol " << std::hex << tmp0 << " " << tmp1 << "  " << tmp2 << std::endl;
+	//std::cout << "rol " << std::hex << tmp0 << " " << tmp1 << "  " << tmp2 << std::endl;
 	
 	this->data_stack.push(tmp0);
 	this->data_stack.push(tmp2);
@@ -1432,18 +1437,18 @@ void processor::exec_roln( machina::arch::size_t n )
 		this->data_stack.pop();
 	}
 	
-	std::cout << "roln " << std::hex << tmpn[0] << " ";
+	//std::cout << "roln " << std::hex << tmpn[0] << " ";
 	
 	this->data_stack.push(tmpn[0]);
 	
 	for(machina::arch::size_t i = (n-1); i > 0; i--)
 	{
-		std::cout << tmpn[i] << " ";
+		//std::cout << tmpn[i] << " ";
 		
 		this->data_stack.push(tmpn[i]);
 	}
 	
-	std::cout << std::endl;
+	//std::cout << std::endl;
 	
 	delete tmpn;
 }
@@ -1451,7 +1456,7 @@ void processor::exec_roln( machina::arch::size_t n )
  
 void processor::exec_frame( machina::arch::size_t size )
 {
-	std::cout << "frame " << std::dec << size << std::endl;
+	//std::cout << "frame " << std::dec << size << std::endl;
 	
 	for(machina::arch::size_t n = 0; n < size; n++)
 	{
@@ -1461,7 +1466,7 @@ void processor::exec_frame( machina::arch::size_t size )
 
 void processor::exec_obtain( machina::arch::size_t index )
 {
-	std::cout << "obtain " << std::dec << index << std::endl;
+	//std::cout << "obtain " << std::dec << index << std::endl;
 	
 	std::stack<machina::arch::pointer_t> tmp_stack;
 	
@@ -1482,7 +1487,7 @@ void processor::exec_obtain( machina::arch::size_t index )
 
 void processor::exec_place( machina::arch::size_t index )
 {
-	std::cout << "place " << std::dec << index << std::endl;
+	//std::cout << "place " << std::dec << index << std::endl;
 	
 	std::stack<machina::arch::pointer_t> tmp_stack;
 	
@@ -1504,7 +1509,7 @@ void processor::exec_place( machina::arch::size_t index )
 
 void processor::exec_cleanup( machina::arch::size_t size )
 {
-	std::cout << "cleanup " << std::dec << size << std::endl;
+	//std::cout << "cleanup " << std::dec << size << std::endl;
 	
 	for(machina::arch::size_t n = 0; n < size; n++)
 	{
@@ -1515,14 +1520,14 @@ void processor::exec_cleanup( machina::arch::size_t size )
 
 void processor::exec_jmp( machina::arch::pointer_t address )
 {
-	std::cout << "jmp " << std::hex << address << std::endl;
+	//std::cout << "jmp " << std::hex << address << std::endl;
 
 	this->ip = address;
 }
 
 void processor::exec_jmpz( machina::arch::pointer_t address )
 {
-	std::cout << "jmpz " << std::hex << address << std::endl;
+	//std::cout << "jmpz " << std::hex << address << std::endl;
 	
 	machina::arch::long_t tmp0;
 	
@@ -1541,7 +1546,7 @@ void processor::exec_jmpz( machina::arch::pointer_t address )
 
 void processor::exec_jmpnz( machina::arch::pointer_t address )
 {
-	std::cout << "jmpnz " << std::hex << address << std::endl;
+	//std::cout << "jmpnz " << std::hex << address << std::endl;
 	
 	machina::arch::long_t tmp0;
 	
@@ -1560,7 +1565,7 @@ void processor::exec_jmpnz( machina::arch::pointer_t address )
 
 void processor::exec_jmplz( machina::arch::pointer_t address )
 {
-	std::cout << "jmplz " << std::hex << address << std::endl;
+	//std::cout << "jmplz " << std::hex << address << std::endl;
 
 	machina::arch::long_t tmp0;
 	
@@ -1579,7 +1584,7 @@ void processor::exec_jmplz( machina::arch::pointer_t address )
 
 void processor::exec_jmpgz( machina::arch::pointer_t address )
 {
-	std::cout << "jmpgz " << std::hex << address << std::endl;
+	//std::cout << "jmpgz " << std::hex << address << std::endl;
 
 	machina::arch::long_t tmp0;
 	
@@ -1598,7 +1603,7 @@ void processor::exec_jmpgz( machina::arch::pointer_t address )
 
 void processor::exec_jmpeq( machina::arch::pointer_t address )
 {
-	std::cout << "jmpeq " << std::hex << address << std::endl;
+	//std::cout << "jmpeq " << std::hex << address << std::endl;
 
 	machina::arch::long_t tmp0, tmp1;
 	
@@ -1619,7 +1624,7 @@ void processor::exec_jmpeq( machina::arch::pointer_t address )
 
 void processor::exec_jmpneq( machina::arch::pointer_t address )
 {
-	std::cout << "jmpneq " << std::hex << address << std::endl;
+	//std::cout << "jmpneq " << std::hex << address << std::endl;
 
 	machina::arch::long_t tmp0, tmp1;
 	
@@ -1645,7 +1650,7 @@ void processor::exec_call(  )
 	address = this->data_stack.top();
 	this->data_stack.pop();
 	
-	std::cout << "call " << std::hex << address << std::endl;
+	//std::cout << "call " << std::hex << address << std::endl;
 	
 	this->call_stack.push(this->ip + machina::instruction_byte);
 	this->ip = address;
@@ -1653,7 +1658,7 @@ void processor::exec_call(  )
 				
 void processor::exec_call( machina::arch::pointer_t address )
 {
-	std::cout << "call " << std::hex << address << std::endl;
+	//std::cout << "call " << std::hex << address << std::endl;
 
 	this->call_stack.push(this->ip + machina::instruction_multibyte);
 	this->ip = address;
@@ -1661,15 +1666,23 @@ void processor::exec_call( machina::arch::pointer_t address )
 				
 void processor::exec_ret(  )
 {
-	std::cout << "ret to " << std::hex << this->call_stack.top() << std::endl;
+	//std::cout << "ret to " << std::hex << this->call_stack.top() << std::endl;
 
 	this->ip = this->call_stack.top();
 	this->call_stack.pop();
 }
 
+void processor::exec_out(  )
+{
+	machina::arch::byte_t tmp0 = this->data_stack.top();
+	this->data_stack.pop();
+	
+	fputc(tmp0, stdout);
+}
+
 void processor::exec_halt(  )
 {
-	std::cout << "halt" << std::endl;
+	//std::cout << "halt" << std::endl;
 	
 	this->status |= processor::halted;
 }

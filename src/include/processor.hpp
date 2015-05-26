@@ -563,6 +563,11 @@ namespace machina
 			void exec_ret(  );
 			
 			/**
+			  * @brief	Executes the 'out' instruction
+			  */ 
+			void exec_out(  );
+			
+			/**
 			  * @brief	Executes the 'halt' instruction
 			  */
 			void exec_halt(  );

@@ -15,7 +15,7 @@ static machina::arch::opcode_t	square[] =
 /** 0x0000 */	0x0A,                                 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 		
 		/**
-		  * Function 'sqare'
+		  * Function 'square'
 		  */
 /** 0x0008 */	machina::opcode_load_long,
 /** 0x0009 */	machina::opcode_dup,
@@ -35,7 +35,29 @@ static machina::arch::opcode_t	square[] =
 /** 0x0035 */	machina::opcode_sub_long,
 /** 0x0036 */   machina::opcode_jmplz,                0x0C, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 
-/** 0x003E */	machina::opcode_halt,
+/** 0x003E */	machina::opcode_load_immediate_long,  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+/** 0x0046 */	machina::opcode_load_long,
+
+/** 0x0047 */	machina::opcode_halt,
+};
+
+static machina::arch::opcode_t	hello[] =
+{
+		/**
+		  * Variable s (type string)
+		  */
+/** 0x0000 */	0x48,                                 0x65, 0x6C, 0x6C, 0x6F, 0x20, 0x57, 0x6F,
+/** 0x0008 */	0x72,                                 0x6C, 0x64, 0x21, 0x0A, 0x00, 
+
+/** 0x000E */	machina::opcode_load_immediate_long,  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+/** 0x0016 */	machina::opcode_dup,
+/** 0x0017 */	machina::opcode_load_byte,
+/** 0x0018 */	machina::opcode_dup,
+/** 0x0019 */	machina::opcode_jmpz,                 0x2B, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+/** 0x0021 */	machina::opcode_out,
+/** 0x0022 */	machina::opcode_inc_long,
+/** 0x0023 */	machina::opcode_jmp,                  0x16, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+/** 0x002B */	machina::opcode_halt,
 };
 
 int main(  )
@@ -45,8 +67,24 @@ int main(  )
 	  */ 
 	machina::virtual_machine vm;
 	
+	std::cout << "Loading demo program 'hello' (" << std::dec << sizeof(hello) << " bytes) ... " << std::endl; 
+	
 	/**
-	  * Load program 'square'
+	  * Load program 'hello'
+	  */ 
+	vm.load(hello, sizeof(hello), 0xE);
+	
+	/**
+	  * Dump the machine state
+	  */ 
+	vm.dump(stdout);
+	vm.trace(stdout);
+	
+	std::cout << std::endl << std::endl;
+	std::cout << "Loading demo program 'square' (" << std::dec << sizeof(square) << " bytes) ... " << std::endl;
+	
+	/**
+	  * Load program 'hello'
 	  */ 
 	vm.load(square, sizeof(square), 0xC);
 	
