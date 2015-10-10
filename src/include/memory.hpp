@@ -51,7 +51,7 @@ namespace machina
 			{
 				memcpy(this->ptr, ptr, size);
 				this->size = size;
-			}				
+			}
 		}
 		
 		/**

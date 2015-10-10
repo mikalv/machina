@@ -6,19 +6,12 @@ default: all
 .PHONY: clean
 .PHONY: doc
 
-machina-64:
-	-make --no-print-directory -f ./config/machina_arch_64/Makefile clean
-	make --no-print-directory -f ./config/machina_arch_64/Makefile
+machina:
+	-make --no-print-directory -f ./config/Makefile clean
+	make --no-print-directory -f ./config/Makefile
 	
-machina-32:
-	-make --no-print-directory -f ./config/machina_arch_32/Makefile clean
-	make --no-print-directory -f ./config/machina_arch_32/Makefile
-	
-test-64:
-	make --no-print-directory -f ./config/machina_arch_64/Makefile test
-	
-test-32:
-	make --no-print-directory -f ./config/machina_arch_32/Makefile test
+test:
+	make --no-print-directory -f ./config/Makefile test
 
 	
 
@@ -28,10 +21,8 @@ doc: Doxyfile
 	doxygen Doxyfile
 
 all:
-	make --no-print-directory machina-64
-	make --no-print-directory machina-32
+	make --no-print-directory machina
 	make --no-print-directory doc
 	
 clean:
-	make --no-print-directory -f ./config/machina_arch_64/Makefile clean
-	make --no-print-directory -f ./config/machina_arch_32/Makefile clean
+	make --no-print-directory -f ./config/Makefile clean

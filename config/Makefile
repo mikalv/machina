@@ -6,18 +6,18 @@ LOGDIR	 = $(BASEDIR)/log
 SRCS = 
 OBJS = 
 
-include $(BASEDIR)/config/machina_arch_64/Makefile.config
-include $(BASEDIR)/config/machina_arch_64/Makefile.rules
+include $(BASEDIR)/config/Makefile.config
+include $(BASEDIR)/config/Makefile.rules
 
 .PHONY: clean
 
-machina-64: $(SRCS)	
+machina: $(SRCS)	
 	$(CPP) $(CCFLAGS) $(CPPFLAGS) $(PREPROC) $(SRCS) -o $(BUILDDIR)/$@ 
 	
 clean:
-	rm $(BUILDDIR)/machina-64
+	rm $(BUILDDIR)/machina
 test:
-	./$(BUILDDIR)/machina-64
+	./$(BUILDDIR)/machina
 
 
 

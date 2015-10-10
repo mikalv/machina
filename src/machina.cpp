@@ -1,4 +1,8 @@
 #include "include/machina.hpp"
+#include "include/binary.hpp"
+
+#include <iostream>
+#include <fstream>
 
 using machina::virtual_machine;
 
@@ -22,6 +26,38 @@ void virtual_machine::load( const char *path )
 	  */ 
 	
 	path = path;
+	
+	/**
+	  * Read the program image from file
+	  */ 
+	std::ifstream file(path, std::ifstream::in);
+	file.seekg(0, file.end);
+	machina::arch::size_t size = file.tellg();
+	file.seekg(0, file.beg);
+	
+	char *image = new char[size];
+	
+	file.read(image, size);
+	file.close();
+	
+	if(image && machina::binary::check(image) && machina::binary::verify(image))
+	{
+		std::cout << "Loading image " << path << " (" << size << " bytes) ..." << std::endl;
+		
+		machina::binary::header *header = machina::binary::read_header(image);
+		
+		machina::arch::opcode_t *exemem = machina::binary::read_program(image);
+		
+		this->memory = new machina::memory((machina::arch::byte_t*)exemem, header->size);
+		this->processor = new machina::processor(this->memory, header->entry);
+		this->processor->run();
+	}
+	else
+	{
+		std::cerr << "Error: " << path << " (" << size << " bytes): " << "not a valid executable image" << std::endl;
+	}
+	
+	delete[] image;
 }
 
 void virtual_machine::reset(  )

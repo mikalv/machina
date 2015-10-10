@@ -7,7 +7,6 @@ using machina::processor;
 
 void processor::dump( FILE *output )
 {
-#ifdef MACHINA_ARCH_64
 	fprintf(output,         "Machina processor dump:\n");
 	fprintf(output,         "   status:          0x%X          \n", this->status);
 	fprintf(output,         "   call-stack size: %lu           \n", this->call_stack.size());
@@ -31,38 +30,10 @@ void processor::dump( FILE *output )
 	{
 		fprintf(output, "   data-stack top:  0x%.16lX      \n", this->data_stack.top());
 	}
-	
-#elif MACHINA_ARCH_32
-	fprintf(output,         "Machina processor dump:\n");
-	fprintf(output,         "   status:          0x%X          \n", this->status);
-	fprintf(output,         "   call-stack size: %lu           \n", this->call_stack.size());
-	
-	if(this->call_stack.empty())
-	{
-		fprintf(output, "   call-stack top:  (empty)       \n" );
-	}
-	else
-	{
-		fprintf(output, "   call-stack top:  0x%.16X       \n", this->call_stack.top());
-	}
-	
-	fprintf(output,         "   data-stack size: %lu           \n", this->data_stack.size());
-	
-	if(this->data_stack.empty())
-	{
-		fprintf(output, "   data-stack top:  (empty)       \n");
-	}
-	else
-	{
-		fprintf(output, "   data-stack top:  0x%.16X       \n", this->data_stack.top());
-	}
-	
-#endif
 }
 
 void processor::trace( FILE *output )
 {
-#ifdef MACHINA_ARCH_64
 	fprintf(output, "Machina processor call-stack trace:\n");
 	
 	for(machina::arch::size_t index = 0; !this->call_stack.empty(); index++)
@@ -71,18 +42,6 @@ void processor::trace( FILE *output )
 		
 		this->call_stack.pop();
 	}
-	
-#elif MACHINA_ARCH_32
-	fprintf(output, "Machina processor call-stack trace:\n");
-	
-	for(machina::arch::size_t index = 0; !this->call_stack.empty(); index++)
-	{
-		fprintf(output, "   [%u] 0x%.16X  ->  0x%.16X    \n", index, this->call_stack.top(), this->memory->read_long(this->call_stack.top()));
-		
-		this->call_stack.pop();
-	}
-	
-#endif
 }
 
 void processor::step(  )
