@@ -80,6 +80,13 @@ int main( int argc, char *argv[] )
 		  * Read the program image from file
 		  */ 
 		std::ifstream file(image_file, std::ifstream::in);
+		
+		if(file.fail())
+		{
+			std::cerr << "Error: " << image_file << ": No such file or directory" << std::endl;
+			exit(1);
+		}
+		
 		file.seekg(0, file.end);
 		machina::arch::size_t size = file.tellg();
 		file.seekg(0, file.beg);
@@ -119,6 +126,13 @@ int main( int argc, char *argv[] )
 		  * Read the program image from file
 		  */ 
 		std::ifstream file(image_file, std::ifstream::in);
+		
+		if(file.fail())
+		{
+			std::cerr << "Error: " << image_file << ": No such file or directory" << std::endl;
+			exit(1);
+		}
+		
 		file.seekg(0, file.end);
 		machina::arch::size_t size = file.tellg();
 		file.seekg(0, file.beg);

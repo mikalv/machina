@@ -31,6 +31,13 @@ void virtual_machine::load( const char *path )
 	  * Read the program image from file
 	  */ 
 	std::ifstream file(path, std::ifstream::in);
+	
+	if(file.fail())
+	{
+		std::cerr << "Error: " << path << ": No such file or directory" << std::endl;
+		exit(1);
+	}
+	
 	file.seekg(0, file.end);
 	machina::arch::size_t size = file.tellg();
 	file.seekg(0, file.beg);
