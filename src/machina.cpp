@@ -21,10 +21,6 @@ void virtual_machine::load( machina::arch::opcode_t *image, machina::arch::size_
 
 void virtual_machine::load( const char *path )
 {
-	/**
-	  * @todo	Implement
-	  */ 
-	
 	path = path;
 	
 	/**

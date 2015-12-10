@@ -72,47 +72,58 @@ namespace machina
 		}
 		
 		/**
-		  * @brief	Reads a byte from memory
+		  * @brief	Reads an int8 from memory
 		  *
-		  * @param	addr		The address to the byte in memory
-		  * @return			Byte 
+		  * @param	addr		The address to the int8 in memory
+		  * @return			int8 (byte)
 		  */
-		machina::arch::byte_t read_byte( machina::arch::pointer_t addr )
+		machina::arch::int8_t read_int8( machina::arch::pointer_t addr )
 		{
-			return *((arch::byte_t*)(this->ptr + addr));
+			return *((machina::arch::int8_t*)(this->ptr + addr));
 		}
 		
 		/**
-		  * @brief	Reads a short integer from memory
+		  * @brief	Reads an int16 from memory
 		  *
-		  * @param	addr		The address to the short integer in memory
-		  * @return 			Short integer
+		  * @param	addr		The address to the int16 in memory
+		  * @return			int16 (short integer)
 		  */
-		machina::arch::short_t read_short( machina::arch::pointer_t addr )
+		machina::arch::int16_t read_int16( machina::arch::pointer_t addr )
 		{
-			return *((arch::short_t*)(this->ptr + addr));
+			return *((machina::arch::int16_t*)(this->ptr + addr));
 		}
 		
 		/**
-		  * @brief	Reads a integer from memory
+		  * @brief	Reads an int32 from memory
 		  *
-		  * @param	addr		The address to the integer in memory
-		  * @return 			Integer
+		  * @param	addr		The address to the int32 in memory
+		  * @return			int32 (integer)
 		  */
-		machina::arch::int_t read_int( machina::arch::pointer_t addr )
+		machina::arch::int32_t read_int32( machina::arch::pointer_t addr )
 		{
-			return *((arch::int_t*)(this->ptr + addr));
+			return *((machina::arch::int32_t*)(this->ptr + addr));
 		}
 		
 		/**
-		  * @brief	Reads a long integer from memory
+		  * @brief	Reads an int64 from memory
 		  *
-		  * @param	addr		The address to the short integer in memory
-		  * @return 			Long integer
+		  * @param	addr		The address to the int64 in memory
+		  * @return			int64 (long integer)
 		  */
-		machina::arch::long_t read_long( machina::arch::pointer_t addr )
+		machina::arch::int64_t read_int64( machina::arch::pointer_t addr )
 		{
-			return *((arch::long_t*)(this->ptr + addr));
+			return *((machina::arch::int64_t*)(this->ptr + addr));
+		}
+		
+		/**
+		  * @brief	Reads an float from memory
+		  *
+		  * @param	addr		The address to the float in memory
+		  * @return			float
+		  */
+		machina::arch::float_t read_float( machina::arch::pointer_t addr )
+		{
+			return *((machina::arch::float_t*)(this->ptr + addr));
 		}
 		
 		/**
@@ -121,54 +132,65 @@ namespace machina
 		  * @param	addr		The address to the instruction in memory
 		  * @return 			Instruction
 		  */
-		machina::arch::instruction_t read_instruction( machina::arch::pointer_t addr )
+		machina::arch::opcode_t *read_instruction( machina::arch::pointer_t addr )
 		{
-			return *((arch::instruction_t*)(this->ptr + addr));
+			return *((machina::arch::instruction_t*)(this->ptr + addr));
 		}
 		
 		
 		/**
-		  * @brief	Writes a byte to memory
+		  * @brief	Writes an int8 to memory
 		  *
-		  * @param	addr		The address to the byte in memory
-		  * @param	value		The byte to be written
+		  * @param	addr		The address to the int8 in memory
+		  * @param	value		The int8 to be written
 		  */
-		void write_byte( machina::arch::pointer_t addr, machina::arch::byte_t value )
+		void write_int8( machina::arch::pointer_t addr, machina::arch::int8_t value )
 		{
-			*((arch::byte_t*)(this->ptr + addr)) = value;
+			*((machina::arch::int8_t*)(this->ptr + addr)) = value;
 		}
 		
 		/**
-		  * @brief	Writes a short integer to memory
+		  * @brief	Writes an int16 to memory
 		  *
-		  * @param	addr		The address to the short integer in memory
-		  * @param	value		The short integer to be written
+		  * @param	addr		The address to the int16 in memory
+		  * @param	value		The int16 to be written
 		  */
-		void write_short( machina::arch::pointer_t addr, machina::arch::short_t value )
+		void write_int16( machina::arch::pointer_t addr, machina::arch::int16_t value )
 		{
-			*((arch::short_t*)(this->ptr + addr)) = value;
+			*((machina::arch::int16_t*)(this->ptr + addr)) = value;
 		}
 		
 		/**
-		  * @brief	Writes a integer to memory
+		  * @brief	Writes an int32 to memory
 		  *
-		  * @param	addr		The address to the integer in memory
-		  * @param	value		The integer to be written
+		  * @param	addr		The address to the int32 in memory
+		  * @param	value		The int32 to be written
 		  */
-		void write_int( machina::arch::pointer_t addr, machina::arch::int_t value )
+		void write_int32( machina::arch::pointer_t addr, machina::arch::int32_t value )
 		{
-			*((arch::int_t*)(this->ptr + addr)) = value;
+			*((machina::arch::int32_t*)(this->ptr + addr)) = value;
 		}
 		
 		/**
-		  * @brief	Writes a long integer to memory
+		  * @brief	Writes an int64 to memory
 		  *
-		  * @param	addr		The address to the long integer in memory
-		  * @param	value		The long integer to be written
+		  * @param	addr		The address to the int64 in memory
+		  * @param	value		The int64 to be written
 		  */
-		void write_long( machina::arch::pointer_t addr, machina::arch::long_t value )
+		void write_int64( machina::arch::pointer_t addr, machina::arch::int64_t value )
 		{
-			*((arch::long_t*)(this->ptr + addr)) = value;
+			*((machina::arch::int64_t*)(this->ptr + addr)) = value;
+		}
+		
+		/**
+		  * @brief	Writes an float to memory
+		  *
+		  * @param	addr		The address to the float in memory
+		  * @param	value		The float to be written
+		  */
+		void write_float( machina::arch::pointer_t addr, machina::arch::float_t value )
+		{
+			*((machina::arch::float_t*)(this->ptr + addr)) = value;
 		}
 	};
 }

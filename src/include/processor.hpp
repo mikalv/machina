@@ -92,14 +92,14 @@ namespace machina
 			machina::arch::pointer_t		ip;
             
 			/**
-			  * @brief	The data-stack of the processor
+			  * @brief	The operand-stack of the processor
 			  */ 
-			std::stack<machina::arch::long_t>	data_stack;
+			std::stack<machina::arch::int64_t>	operand_stack;
             
 			/**
-			  * @brief	The call-stack of the processor
+			  * @brief	The frame-stack of the processor
 			  */
-			std::stack<machina::arch::pointer_t>	call_stack;
+			std::stack<machina::arch::pointer_t>	frame_stack;
 			
 			/**
 			  * @brief	Connects the processor with the memory of the 'machina' virtual machine
@@ -125,322 +125,667 @@ namespace machina
 			
 			
 			/**
-			  * @brief	Loads an immediate value (byte)
+			  * @brief	Loads an immediate value (int8 - byte)
 			  *
 			  * @param	value			Value to be loaded
 			  */ 
-			void exec_load_immediate_byte( machina::arch::byte_t value );
+			void exec_load_immediate_int8( machina::arch::int8_t value );
 			
 			/**
-			  * @brief	Loads an immediate value (short integer)
+			  * @brief	Loads an immediate value (int16 - short integer)
 			  *
 			  * @param	value			Value to be loaded
 			  */ 
-			void exec_load_immediate_short( machina::arch::short_t value );
+			void exec_load_immediate_int16( machina::arch::int16_t value );
 			
 			/**
-			  * @brief	Loads an immediate value (integer)
+			  * @brief	Loads an immediate value (int32 - integer)
 			  *
 			  * @param	value			Value to be loaded
 			  */ 
-			void exec_load_immediate_int( machina::arch::int_t value );
+			void exec_load_immediate_int32( machina::arch::int32_t value );
 			
 			/**
-			  * @brief	Loads an immediate value (long integer)
+			  * @brief	Loads an immediate value (int64 - long integer)
 			  *
 			  * @param	value			Value to be loaded
 			  */ 
-			void exec_load_immediate_long( machina::arch::long_t value );
+			void exec_load_immediate_int64( machina::arch::int64_t value );
 			
 			/**
-			  * @brief	Loads an value (byte) from memory
+			  * @brief	Loads an immediate value (float)
+			  *
+			  * @param	value			Value to be loaded
 			  */ 
-			void exec_load_byte(  );
+			void exec_load_immediate_float( machina::arch::float_t value );
 			
 			/**
-			  * @brief	Loads an value (short integer) from memory
+			  * @brief	Loads an value (int8) from memory
 			  */ 
-			void exec_load_short(  );
+			void exec_load_int8(  );
 			
 			/**
-			  * @brief	Loads an value (integer) from memory
+			  * @brief	Loads an value (int16) from memory
 			  */ 
-			void exec_load_int(  );
+			void exec_load_int16(  );
 			
 			/**
-			  * @brief	Loads an value (long integer) from memory
+			  * @brief	Loads an value (int32) from memory
 			  */ 
-			void exec_load_long(  );
+			void exec_load_int32(  );
+			
+			/**
+			  * @brief	Loads an value (int64) from memory
+			  */ 
+			void exec_load_int64(  );
+			
+			/**
+			  * @brief	Loads an value (float) from memory
+			  */ 
+			void exec_load_float(  );
 			
 			
 			/**
-			  * @brief	Stores a value (byte) to memory with an address given as immediate value
+			  * @brief	Converts a value (float) to another type (int64)
+			  */ 
+			void exec_convert_float_to_int64(  );
+			
+			/**
+			  * @brief	Converts a value (int64) to another type (float)
+			  */
+			void exec_convert_int64_to_float(  );
+			
+			/**
+			  * @brief	Converts a value (int64) to another type (int32)
+			  */
+			void exec_convert_int64_to_int32(  );
+			
+			/**
+			  * @brief	Converts a value (int32) to another type (int16)
+			  */
+			void exec_convert_int32_to_int16(  );
+			
+			/**
+			  * @brief	Converts a value (int16) to another type (int8)
+			  */
+			void exec_convert_int16_to_int8(  );
+			
+			/**
+			  * @brief	Stores a value (int8) to memory with an address given as immediate value
 			  *
 			  * @param	address			Address of the memory
 			  */ 
-			void exec_store_immediate_byte( machina::arch::pointer_t address );
+			void exec_store_immediate_int8( machina::arch::pointer_t address );
 			
 			/**
-			  * @brief	Stores a value (short integer) to memory with an address given as immediate value
+			  * @brief	Stores a value (int16) to memory with an address given as immediate value
 			  *
 			  * @param	address			Address of the memory
 			  */ 
-			void exec_store_immediate_short( machina::arch::pointer_t address );
+			void exec_store_immediate_int16( machina::arch::pointer_t address );
 			
 			/**
-			  * @brief	Stores a value (integer) to memory with an address given as immediate value
+			  * @brief	Stores a value (int32) to memory with an address given as immediate value
 			  *
 			  * @param	address			Address of the memory
 			  */ 
-			void exec_store_immediate_int( machina::arch::pointer_t address );
+			void exec_store_immediate_int32( machina::arch::pointer_t address );
 			
 			/**
-			  * @brief	Stores a value (long integer) to memory with an address given as immediate value
+			  * @brief	Stores a value (int64) to memory with an address given as immediate value
 			  *
 			  * @param	address			Address of the memory
 			  */ 
-			void exec_store_immediate_long( machina::arch::pointer_t address );
+			void exec_store_immediate_int64( machina::arch::pointer_t address );
 			
 			/**
-			  * @brief	Stores a value (byte) to memory
+			  * @brief	Stores a value (float) to memory with an address given as immediate value
+			  *
+			  * @param	address			Address of the memory
 			  */ 
-			void exec_store_byte(  );
+			void exec_store_immediate_float( machina::arch::pointer_t address );
 			
 			/**
-			  * @brief	Stores a value (short integer) to memory
+			  * @brief	Stores a value (int8) to memory
 			  */ 
-			void exec_store_short(  );
+			void exec_store_int8(  );
 			
 			/**
-			  * @brief	Stores a value (integer) to memory
+			  * @brief	Stores a value (int16) to memory
 			  */ 
-			void exec_store_int(  );
+			void exec_store_int16(  );
 			
 			/**
-			  * @brief	Stores a value (long integer) to memory
+			  * @brief	Stores a value (int32) to memory
 			  */ 
-			void exec_store_long(  );
+			void exec_store_int32(  );
+			
+			/**
+			  * @brief	Stores a value (int64) to memory
+			  */ 
+			void exec_store_int64(  );
+			
+			/**
+			  * @brief	Stores a value (float) to memory
+			  */ 
+			void exec_store_float(  );
+			
+			
+			/**
+			  * @brief	Converts a value (int8) to another type (int16)
+			  */
+			void exec_convert_int8_to_int16(  );
+			
+			/**
+			  * @brief	Converts a value (int16) to another type (int32)
+			  */
+			void exec_convert_int16_to_int32(  );
+			
+			/**
+			  * @brief	Converts a value (int32) to another type (int64)
+			  */
+			void exec_convert_int32_to_int64(  );
 			
 			
 			/**
 			  * @brief	Executes the 'inc' instruction
 			  */
-			void exec_inc_byte(  );
+			void exec_inc_int8(  );
 			
 			/**
 			  * @brief	Executes the 'inc' instruction
 			  */
-			void exec_inc_short(  );
+			void exec_inc_int16(  );
 			
 			/**
 			  * @brief	Executes the 'inc' instruction
 			  */
-			void exec_inc_int(  );
+			void exec_inc_int32(  );
 			
 			/**
 			  * @brief	Executes the 'inc' instruction
 			  */
-			void exec_inc_long(  );
+			void exec_inc_int64(  );
+			
+			/**
+			  * @brief	Executes the 'inc' instruction
+			  */
+			void exec_inc_float(  );
 			
 			/**
 			  * @brief	Executes the 'dec' instruction
 			  */
-			void exec_dec_byte(  );
+			void exec_dec_int8(  );
 			
 			/**
 			  * @brief	Executes the 'dec' instruction
 			  */
-			void exec_dec_short(  );
+			void exec_dec_int16(  );
 			
 			/**
 			  * @brief	Executes the 'dec' instruction
 			  */
-			void exec_dec_int(  );
+			void exec_dec_int32(  );
 			
 			/**
 			  * @brief	Executes the 'dec' instruction
 			  */
-			void exec_dec_long(  );
-				
+			void exec_dec_int64(  );
+			
 			/**
-			  * @brief	Executes the 'add' instruction
+			  * @brief	Executes the 'dec' instruction
 			  */
-			void exec_add_byte(  );
+			void exec_dec_float(  );
+			
 			
 			/**
 			  * @brief	Executes the 'add' instruction
 			  */
-			void exec_add_short(  );
+			void exec_add_immediate_int8( machina::arch::int8_t value );
 			
 			/**
 			  * @brief	Executes the 'add' instruction
 			  */
-			void exec_add_int(  );
+			void exec_add_immediate_int16( machina::arch::int16_t value );
 			
 			/**
 			  * @brief	Executes the 'add' instruction
 			  */
-			void exec_add_long(  );
+			void exec_add_immediate_int32( machina::arch::int32_t value );
+			
+			/**
+			  * @brief	Executes the 'add' instruction
+			  */
+			void exec_add_immediate_int64( machina::arch::int64_t value );
+			
+			/**
+			  * @brief	Executes the 'add' instruction
+			  */
+			void exec_add_immediate_float( machina::arch::float_t value );
+			
+			/**
+			  * @brief	Executes the 'add' instruction
+			  */
+			void exec_add_int8(  );
+			
+			/**
+			  * @brief	Executes the 'add' instruction
+			  */
+			void exec_add_int16(  );
+			
+			/**
+			  * @brief	Executes the 'add' instruction
+			  */
+			void exec_add_int32(  );
+			
+			/**
+			  * @brief	Executes the 'add' instruction
+			  */
+			void exec_add_int64(  );
+			
+			/**
+			  * @brief	Executes the 'add' instruction
+			  */
+			void exec_add_float(  );
+			
 			
 			/**
 			  * @brief	Executes the 'sub' instruction
 			  */
-			void exec_sub_byte(  );
+			void exec_sub_immediate_int8( machina::arch::int8_t value );
 			
 			/**
 			  * @brief	Executes the 'sub' instruction
 			  */
-			void exec_sub_short(  );
+			void exec_sub_immediate_int16( machina::arch::int16_t value );
 			
 			/**
 			  * @brief	Executes the 'sub' instruction
 			  */
-			void exec_sub_int(  );
+			void exec_sub_immediate_int32( machina::arch::int32_t value );
 			
 			/**
 			  * @brief	Executes the 'sub' instruction
 			  */
-			void exec_sub_long(  );
+			void exec_sub_immediate_int64( machina::arch::int64_t value );
+			
+			/**
+			  * @brief	Executes the 'sub' instruction
+			  */
+			void exec_sub_immediate_float( machina::arch::float_t value );
+			
+			/**
+			  * @brief	Executes the 'sub' instruction
+			  */
+			void exec_sub_int8(  );
+			
+			/**
+			  * @brief	Executes the 'sub' instruction
+			  */
+			void exec_sub_int16(  );
+			
+			/**
+			  * @brief	Executes the 'sub' instruction
+			  */
+			void exec_sub_int32(  );
+			
+			/**
+			  * @brief	Executes the 'sub' instruction
+			  */
+			void exec_sub_int64(  );
+			
+			/**
+			  * @brief	Executes the 'sub' instruction
+			  */
+			void exec_sub_float(  );
+			
+			
 			
 			/**
 			  * @brief	Executes the 'mul' instruction
 			  */
-			void exec_mul_byte(  );
+			void exec_mul_immediate_int8( machina::arch::int8_t value );
 			
 			/**
 			  * @brief	Executes the 'mul' instruction
 			  */
-			void exec_mul_short(  );
-			/**
-			 * 
-			  * @brief	Executes the 'mul' instruction
-			  */
-			void exec_mul_int(  );
+			void exec_mul_immediate_int16( machina::arch::int16_t value );
 			
 			/**
 			  * @brief	Executes the 'mul' instruction
 			  */
-			void exec_mul_long(  );			
-		
+			void exec_mul_immediate_int32( machina::arch::int32_t value );
+			
 			/**
-			  * @brief	Executes the 'div' instruction
+			  * @brief	Executes the 'mul' instruction
 			  */
-			void exec_div_byte(  );
+			void exec_mul_immediate_int64( machina::arch::int64_t value );
+			
+			/**
+			  * @brief	Executes the 'mul' instruction
+			  */
+			void exec_mul_immediate_float( machina::arch::float_t value );
+			
+			/**
+			  * @brief	Executes the 'mul' instruction
+			  */
+			void exec_mul_int8(  );
+			
+			/**
+			  * @brief	Executes the 'mul' instruction
+			  */
+			void exec_mul_int16(  );
+			
+			/**
+			  * @brief	Executes the 'mul' instruction
+			  */
+			void exec_mul_int32(  );
+			
+			/**
+			  * @brief	Executes the 'mul' instruction
+			  */
+			void exec_mul_int64(  );
+			
+			/**
+			  * @brief	Executes the 'mul' instruction
+			  */
+			void exec_mul_float(  );
+			
+			
 			
 			/**
 			  * @brief	Executes the 'div' instruction
 			  */
-			void exec_div_short(  );
+			void exec_div_immediate_int8( machina::arch::int8_t value );
 			
 			/**
 			  * @brief	Executes the 'div' instruction
 			  */
-			void exec_div_int(  );
+			void exec_div_immediate_int16( machina::arch::int16_t value );
 			
 			/**
 			  * @brief	Executes the 'div' instruction
 			  */
-			void exec_div_long(  );
+			void exec_div_immediate_int32( machina::arch::int32_t value );
+			
+			/**
+			  * @brief	Executes the 'div' instruction
+			  */
+			void exec_div_immediate_int64( machina::arch::int64_t value );
+			
+			/**
+			  * @brief	Executes the 'div' instruction
+			  */
+			void exec_div_immediate_float( machina::arch::float_t value );
+			
+			/**
+			  * @brief	Executes the 'div' instruction
+			  */
+			void exec_div_int8(  );
+			
+			/**
+			  * @brief	Executes the 'div' instruction
+			  */
+			void exec_div_int16(  );
+			
+			/**
+			  * @brief	Executes the 'div' instruction
+			  */
+			void exec_div_int32(  );
+			
+			/**
+			  * @brief	Executes the 'div' instruction
+			  */
+			void exec_div_int64(  );
+			
+			/**
+			  * @brief	Executes the 'div' instruction
+			  */
+			void exec_div_float(  );
+			
+			
 			
 			/**
 			  * @brief	Executes the 'mod' instruction
 			  */
-			void exec_mod_byte(  );
+			void exec_mod_immediate_int8( machina::arch::int8_t value );
 			
 			/**
 			  * @brief	Executes the 'mod' instruction
 			  */
-			void exec_mod_short(  );
+			void exec_mod_immediate_int16( machina::arch::int16_t value );
 			
 			/**
 			  * @brief	Executes the 'mod' instruction
 			  */
-			void exec_mod_int(  );
+			void exec_mod_immediate_int32( machina::arch::int32_t value );
 			
 			/**
 			  * @brief	Executes the 'mod' instruction
 			  */
-			void exec_mod_long(  );
+			void exec_mod_immediate_int64( machina::arch::int64_t value );
+			
+			/**
+			  * @brief	Executes the 'mod' instruction
+			  */
+			void exec_mod_int8(  );
+			
+			/**
+			  * @brief	Executes the 'mod' instruction
+			  */
+			void exec_mod_int16(  );
+			
+			/**
+			  * @brief	Executes the 'mod' instruction
+			  */
+			void exec_mod_int32(  );
+			
+			/**
+			  * @brief	Executes the 'mod' instruction
+			  */
+			void exec_mod_int64(  );
+			
+			
 			
 			/**
 			  * @brief	Executes the 'and' instruction
 			  */
-			void exec_and_byte(  );
+			void exec_and_immediate_int8( machina::arch::int8_t value );
 			
 			/**
 			  * @brief	Executes the 'and' instruction
 			  */
-			void exec_and_short(  );
+			void exec_and_immediate_int16( machina::arch::int16_t value );
 			
 			/**
 			  * @brief	Executes the 'and' instruction
 			  */
-			void exec_and_int(  );
+			void exec_and_immediate_int32( machina::arch::int32_t value );
 			
 			/**
 			  * @brief	Executes the 'and' instruction
 			  */
-			void exec_and_long(  );
+			void exec_and_immediate_int64( machina::arch::int64_t value );
+			
+			/**
+			  * @brief	Executes the 'and' instruction
+			  */
+			void exec_and_int8(  );
+			
+			/**
+			  * @brief	Executes the 'and' instruction
+			  */
+			void exec_and_int16(  );
+			
+			/**
+			  * @brief	Executes the 'and' instruction
+			  */
+			void exec_and_int32(  );
+			
+			/**
+			  * @brief	Executes the 'and' instruction
+			  */
+			void exec_and_int64(  );
+			
+			
 			
 			/**
 			  * @brief	Executes the 'or' instruction
 			  */
-			void exec_or_byte(  );
+			void exec_or_immediate_int8( machina::arch::int8_t value );
 			
 			/**
 			  * @brief	Executes the 'or' instruction
 			  */
-			void exec_or_short(  );
+			void exec_or_immediate_int16( machina::arch::int16_t value );
 			
 			/**
 			  * @brief	Executes the 'or' instruction
 			  */
-			void exec_or_int(  );
+			void exec_or_immediate_int32( machina::arch::int32_t value );
 			
 			/**
 			  * @brief	Executes the 'or' instruction
 			  */
-			void exec_or_long(  );
+			void exec_or_immediate_int64( machina::arch::int64_t value );
+			
+			/**
+			  * @brief	Executes the 'or' instruction
+			  */
+			void exec_or_int8(  );
+			
+			/**
+			  * @brief	Executes the 'or' instruction
+			  */
+			void exec_or_int16(  );
+			
+			/**
+			  * @brief	Executes the 'or' instruction
+			  */
+			void exec_or_int32(  );
+			
+			/**
+			  * @brief	Executes the 'or' instruction
+			  */
+			void exec_or_int64(  );
+			
+			
 			
 			/**
 			  * @brief	Executes the 'xor' instruction
 			  */
-			void exec_xor_byte(  );
+			void exec_xor_immediate_int8( machina::arch::int8_t value );
 			
 			/**
 			  * @brief	Executes the 'xor' instruction
 			  */
-			void exec_xor_short(  );
+			void exec_xor_immediate_int16( machina::arch::int16_t value );
 			
 			/**
 			  * @brief	Executes the 'xor' instruction
 			  */
-			void exec_xor_int(  );
+			void exec_xor_immediate_int32( machina::arch::int32_t value );
 			
 			/**
 			  * @brief	Executes the 'xor' instruction
 			  */
-			void exec_xor_long(  );
+			void exec_xor_immediate_int64( machina::arch::int64_t value );
+			
+			/**
+			  * @brief	Executes the 'xor' instruction
+			  */
+			void exec_xor_int8(  );
+			
+			/**
+			  * @brief	Executes the 'xor' instruction
+			  */
+			void exec_xor_int16(  );
+			
+			/**
+			  * @brief	Executes the 'xor' instruction
+			  */
+			void exec_xor_int32(  );
+			
+			/**
+			  * @brief	Executes the 'xor' instruction
+			  */
+			void exec_xor_int64(  );
+			
+			
 			
 			/**
 			  * @brief	Executes the 'not' instruction
 			  */
-			void exec_not_byte(  );
+			void exec_not_int8(  );
 			
 			/**
 			  * @brief	Executes the 'not' instruction
 			  */
-			void exec_not_short(  );
+			void exec_not_int16(  );
 			
 			/**
 			  * @brief	Executes the 'not' instruction
 			  */
-			void exec_not_int(  );
+			void exec_not_int32(  );
 			
 			/**
 			  * @brief	Executes the 'not' instruction
 			  */
-			void exec_not_long(  );
+			void exec_not_int64(  );
+			
+			
+			
+			/**
+			  * @brief	Executes the 'cmp' instruction
+			  */
+			void exec_cmp_immediate_int8( machina::arch::int8_t value );
+			
+			/**
+			  * @brief	Executes the 'cmp' instruction
+			  */
+			void exec_cmp_immediate_int16( machina::arch::int16_t value );
+			
+			/**
+			  * @brief	Executes the 'cmp' instruction
+			  */
+			void exec_cmp_immediate_int32( machina::arch::int32_t value );
+			
+			/**
+			  * @brief	Executes the 'cmp' instruction
+			  */
+			void exec_cmp_immediate_int64( machina::arch::int64_t value );
+			
+			/**
+			  * @brief	Executes the 'cmp' instruction
+			  */
+			void exec_cmp_immediate_float( machina::arch::float_t value );
+			
+			/**
+			  * @brief	Executes the 'cmp' instruction
+			  */
+			void exec_cmp_int8(  );
+			
+			/**
+			  * @brief	Executes the 'cmp' instruction
+			  */
+			void exec_cmp_int16(  );
+			
+			/**
+			  * @brief	Executes the 'cmp' instruction
+			  */
+			void exec_cmp_int32(  );
+			
+			/**
+			  * @brief	Executes the 'cmp' instruction
+			  */
+			void exec_cmp_int64(  );
+			
+			/**
+			  * @brief	Executes the 'cmp' instruction
+			  */
+			void exec_cmp_float(  );
+			
+			
 			
 			/**
 			  * @brief	Executes the 'swap' instruction
@@ -464,6 +809,10 @@ namespace machina
 			  */
 			void exec_roln( machina::arch::size_t n );
 			
+			/**
+			  * @brief	Executes the 'drop' instruction
+			  */
+			void exec_drop(  );
 			
 			
 			/**
@@ -545,27 +894,38 @@ namespace machina
 			  */ 
 			void exec_jmpneq( machina::arch::pointer_t address );
 				
-			/**
-			  * @brief	Executes the 'call' instruction
-			  */ 
-			void exec_call(  );
-				
+			
 			/**
 			  * @brief	Executes the 'call' instruction
 			  * 
 			  * @param	address			The destionation address
 			  */ 
-			void exec_call( machina::arch::pointer_t address );
+			void exec_call_immediate( machina::arch::pointer_t address );
+			
+			/**
+			  * @brief	Executes the 'call' instruction
+			  */ 
+			void exec_call(  );
+				
 				
 			/**
 			  * @brief	Executes the 'ret' instruction
 			  */
 			void exec_ret(  );
 			
+			
+			/**
+			  * @brief	Executes the 'out' instruction
+			  * 
+			  * @param	value			The value to write to the output
+			  */ 
+			void exec_out_immediate( machina::arch::int8_t value );
+			
 			/**
 			  * @brief	Executes the 'out' instruction
 			  */ 
 			void exec_out(  );
+			
 			
 			/**
 			  * @brief	Executes the 'halt' instruction

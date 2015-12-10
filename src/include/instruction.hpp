@@ -11,12 +11,12 @@ namespace machina
 	/**
 	  * @brief	Size of a normal, single byte instruction
 	  */ 
-	static const arch::size_t	instruction_byte 	= sizeof(arch::opcode_t);
-		
+	static const machina::arch::size_t	instruction_size_byte 	   = sizeof(machina::arch::opcode_t);
+	
 	/**
-	  * @brief	Size of a multibyte instruction
+	  * @brief	Size of a multibyte instruction (with immediate operands)
 	  */ 
-	static const arch::size_t	instruction_multibyte 	= sizeof(arch::opcode_t) + sizeof(arch::operand_t);
+	static const machina::arch::size_t	instruction_size_multibyte = sizeof(machina::arch::opcode_t) + sizeof(machina::arch::operand_t);
 	
 	/**
 	  * @brief  Union describing an instruction
@@ -26,19 +26,19 @@ namespace machina
 		/**
 		  * @brief  The whole instruction
 		  */
-		arch::instruction_t     whole;
+		machina::arch::instruction_t     whole;
 		
 		/**
 		  * @brief  The parts of the instruction
 		  */ 
-		arch::byte_t            parts[sizeof(arch::instruction_t)];
+		machina::arch::byte_t            parts[sizeof(machina::arch::instruction_t)];
 		
 		/**
-		* @brief  The constructor
-		*/
-		instruction( arch::instruction_t whole )
+		  * @brief  The constructor
+		  */
+		instruction( machina::arch::instruction_t whole )
 		{
-			this->whole = whole;
+			memcpy(this->whole, whole, sizeof(machina::arch::instruction_t));
 		}
 		
 		/**
@@ -46,9 +46,9 @@ namespace machina
 		  * 
 		  * @return             The opcode
 		  */ 
-		inline arch::opcode_t opcode(  )
+		inline machina::arch::opcode_t opcode(  )
 		{
-			return (arch::opcode_t)this->parts[0];
+			return (machina::arch::opcode_t)this->parts[0];
 		}
 		
 		/**
@@ -56,9 +56,59 @@ namespace machina
 		  *
 		  * @return             The operand
 		  */ 
-		inline arch::long_t operand(  )
+		inline machina::arch::int8_t operand_as_int8(  )
 		{
-			return (((arch::long_t*)this->parts)[0] & 0xFFFFFFFFFFFFFF00) >> 8;
+			return ((machina::arch::int8_t*)(this->parts + sizeof(machina::arch::byte_t)))[0];
+		}
+		
+		/**
+		  * @brief  Gets the operand of the instruction
+		  *
+		  * @return             The operand
+		  */ 
+		inline machina::arch::int16_t operand_as_int16(  )
+		{
+			return ((machina::arch::int16_t*)(this->parts + sizeof(machina::arch::byte_t)))[0];
+		}
+		
+		/**
+		  * @brief  Gets the operand of the instruction
+		  *
+		  * @return             The operand
+		  */ 
+		inline machina::arch::int32_t operand_as_int32(  )
+		{
+			return ((machina::arch::int32_t*)(this->parts + sizeof(machina::arch::byte_t)))[0];
+		}
+		
+		/**
+		  * @brief  Gets the operand of the instruction
+		  *
+		  * @return             The operand
+		  */ 
+		inline machina::arch::int64_t operand_as_int64(  )
+		{
+			return ((machina::arch::int64_t*)(this->parts + sizeof(machina::arch::byte_t)))[0];
+		}
+		
+		/**
+		  * @brief  Gets the operand of the instruction
+		  *
+		  * @return             The operand
+		  */ 
+		inline machina::arch::pointer_t operand_as_addr(  )
+		{
+			return ((machina::arch::pointer_t*)(this->parts + sizeof(machina::arch::byte_t)))[0];
+		}
+		
+		/**
+		  * @brief  Gets the operand of the instruction
+		  *
+		  * @return             The operand
+		  */ 
+		inline machina::arch::float_t operand_as_float(  )
+		{
+			return ((machina::arch::float_t*)(this->parts + sizeof(machina::arch::byte_t)))[0];
 		}
 	};
 }

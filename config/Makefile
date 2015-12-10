@@ -12,7 +12,7 @@ include $(BASEDIR)/config/Makefile.rules
 .PHONY: clean
 
 machina: $(SRCS)	
-	$(CPP) $(CCFLAGS) $(CPPFLAGS) $(PREPROC) $(SRCS) -o $(BUILDDIR)/$@ 
+	$(CPP) $(CCFLAGS) $(CPPFLAGS) $(PREPROC) $(INCL) $(SRCS) -o $(BUILDDIR)/$@ 
 	
 clean:
 	rm $(BUILDDIR)/machina

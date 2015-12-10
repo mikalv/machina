@@ -13,7 +13,7 @@ namespace machina
 	  * @brief	Namespace describing the 'machina' architecture
 	  */ 
 	namespace arch
-	{		
+	{
 		/**
 		  * @brief	Type used for sizes
 		  */  
@@ -25,29 +25,34 @@ namespace machina
 		typedef uint64_t                            		pointer_t;
 		
 		/**
-		  * @brief	Type used for instructions
-		  */ 
-		typedef uint64_t                           		instruction_t;
-		
-		/**
-		  * @brief	Type used for bytes
+		  * @brief	Type used for bytes (8bit)
 		  */ 
 		typedef int8_t                              		byte_t;
 		
 		/**
-		  * @brief	Type used for integers
+		  * @brief	Type used for bytes (8bit)
 		  */ 
-		typedef int16_t                             		short_t;
+		typedef int8_t                              		int8_t;
 		
 		/**
-		  * @brief	Type used for integers
+		  * @brief	Type used for short integers (16bit)
 		  */ 
-		typedef int32_t                             		int_t;
+		typedef int16_t                             		int16_t;
 		
 		/**
-		  * @brief	Type used for long integers
+		  * @brief	Type used for integers (32bit)
 		  */ 
-		typedef int64_t                             		long_t;
+		typedef int32_t                             		int32_t;
+		
+		/**
+		  * @brief	Type used for long integers (64bit)
+		  */ 
+		typedef int64_t                             		int64_t;
+		
+		/**
+		  * @brief	Type used for floats
+		  */
+		typedef double						float_t;
 		
 		/**
 		  * @brief	Type used for opcodes
@@ -57,7 +62,12 @@ namespace machina
 		/**
 		  * @brief	Type used for operands
 		  */ 
-		typedef int8_t						operand_t[sizeof(instruction_t) - 1];
+		typedef int64_t						operand_t;
+		
+		/**
+		  * @brief	Type used for instructions
+		  */ 
+		typedef uint8_t                           		instruction_t[sizeof(opcode_t) + sizeof(operand_t)];
 		
 		/**
 		  * @brief	The null pointer
