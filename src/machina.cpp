@@ -11,6 +11,12 @@ virtual_machine::virtual_machine(  )
 	
 }
 
+virtual_machine::~virtual_machine(  )
+{
+	delete this->memory;
+	delete this->processor;
+}
+
 void virtual_machine::load( machina::arch::opcode_t *image, machina::arch::size_t size, machina::arch::pointer_t entry )
 {
 	this->memory = new machina::memory((machina::arch::byte_t*)image, size);
@@ -71,6 +77,7 @@ void virtual_machine::reset(  )
 
 void virtual_machine::dump( FILE *output )
 {
+	this->memory->dump(output);
 	this->processor->dump(output);
 }
 

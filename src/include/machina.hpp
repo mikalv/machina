@@ -24,6 +24,11 @@ namespace machina
 			virtual_machine(  );
 			
 			/**
+			  * @brief	The default destructor
+			  */ 
+			~virtual_machine(  );
+			
+			/**
 			  * @brief	Loads an image into the virtual machine 
 			  * 
 			  * @param	image		Pointer to memory containing the image

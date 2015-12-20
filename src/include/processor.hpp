@@ -30,6 +30,11 @@ namespace machina
 			static const machina::arch::byte_t	halted	= 0x01;
 			
 			/**
+			  * @brief	Flag indicating the processor is aborted
+			  */
+			static const machina::arch::byte_t	aborted	= 0x02;
+			
+			/**
 			  * @brief	Constructor
 			  * 
 			  * @param	memory		Pointer to the memory
@@ -285,6 +290,24 @@ namespace machina
 			  * @brief	Converts a value (int32) to another type (int64)
 			  */
 			void exec_convert_int32_to_int64(  );
+			
+			
+			/**
+			  * @brief	Allocates memory
+			  * 
+			  * @param	size			The size of the memory
+			  */
+			void exec_alloc_immediate( machina::arch::size_t size );
+			
+			/**
+			  * @brief	Allocates memory
+			  */
+			void exec_alloc(  );
+			
+			/**
+			  * @brief	Frees memory
+			  */ 
+			void exec_free(  );
 			
 			
 			/**

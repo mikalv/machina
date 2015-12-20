@@ -1,5 +1,6 @@
 #include "include/processor.hpp"
 #include "include/opcode.hpp"
+#include "include/exception.hpp"
 
 #include <iostream>
 
@@ -38,7 +39,14 @@ void processor::trace( FILE *output )
 	
 	for(machina::arch::size_t index = 0; !this->frame_stack.empty(); index++)
 	{
-		fprintf(output, "  [%lu] 0x%.16lX  ->  0x%.16lX \n", index, this->frame_stack.top(), this->memory->read_int64(this->frame_stack.top()));
+		try
+		{
+			fprintf(output, "  [%lu] 0x%.16lX  -->  0x%.16lX \n", index, this->frame_stack.top(), this->memory->read_int64(this->frame_stack.top()));
+		}
+		catch(machina::exception::invalid_address &invadd)
+		{
+			fprintf(output, "  [%lu] 0x%.16lX  -->   (outside memory) \n", index, this->frame_stack.top());
+		}
 		
 		this->frame_stack.pop();
 	}
@@ -58,7 +66,9 @@ void processor::trace( FILE *output )
 void processor::step(  )
 {
 	machina::instruction instr = this->fetch();
-
+	
+	machina::exception::invalid_opcode invopc; //char buffer[64];
+	
 	switch(instr.opcode())
 	{
 		/**
@@ -113,6 +123,13 @@ void processor::step(  )
 		OP_CASE(store_int32, , machina::instruction_size_byte)
 		OP_CASE(store_int64, , machina::instruction_size_byte)
 		OP_CASE(store_float, , machina::instruction_size_byte)
+		
+		/**
+		  * Memory management
+		  */
+		OP_CASE(alloc_immediate, instr.operand_as_int64(), machina::instruction_size_multibyte)
+		OP_CASE(alloc,                                   , machina::instruction_size_byte)
+		OP_CASE(free,                                    , machina::instruction_size_byte)
 		
 		/**
 		  * Control Unit operations 
@@ -271,14 +288,48 @@ void processor::step(  )
 		  */
 		OP_CASE(out_immediate, instr.operand_as_int8(), machina::instruction_size_multibyte)
 		OP_CASE(out,                                  , machina::instruction_size_byte)
+		
+		default:
+			char buffer[64]; sprintf(buffer, " : 0x%.2X  0x%.16lX\n", instr.opcode(), instr.operand_as_int64());
+			invopc.message = buffer;
+			throw invopc;
+		break;
 	}
 }
 
 void processor::run(  )
 {
 	while(!(this->status & machina::processor::halted))
-	{		
-		this->step();
+	{
+		try
+		{
+			this->step();
+		}
+		catch(machina::exception::invalid_opcode &invopc)
+		{
+			std::cerr << std::endl << "invalid opcode [exception]: @ 0x" << std::hex << this->ip << " : " << invopc.message << std::endl;
+			this->status = this->status | machina::processor::halted | machina::processor::aborted;
+		}
+		catch(machina::exception::double_free &doufre)
+		{
+			std::cerr << std::endl << "double free [exception]: @ 0x" << std::hex << this->ip << " : " << doufre.message << std::endl;
+			this->status = this->status | machina::processor::halted | machina::processor::aborted;
+		}
+		catch(machina::exception::corrupted_memory &cormem)
+		{
+			std::cerr << std::endl << "corrupted memory [exception]: @ 0x" << std::hex << this->ip << " : " << cormem.message << std::endl;
+			this->status = this->status | machina::processor::halted | machina::processor::aborted;
+		}
+		catch(machina::exception::out_of_memory &oomem)
+		{
+			std::cerr << std::endl << "out of memory [exception]: @ 0x" << std::hex << this->ip << " : " << oomem.message << std::endl;
+			this->status = this->status | machina::processor::halted | machina::processor::aborted;
+		}
+		catch(machina::exception::invalid_address &invadd)
+		{
+			std::cerr << std::endl << "invalid address [exception]: @ 0x" << std::hex << this->ip << " : " << invadd.message << std::endl;
+			this->status = this->status | machina::processor::halted | machina::processor::aborted;
+		}
 	}
 }
 

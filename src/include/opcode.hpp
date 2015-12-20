@@ -169,6 +169,23 @@ namespace machina
 		
 		
 		/**
+		  * @brief	Opcode of the 'alloc memory' instruction
+		  */
+		opcode_alloc_immediate		= 0x1D,
+		
+		/**
+		  * @brief	Opcode of the 'alloc memory' instruction
+		  */
+		opcode_alloc			= 0x1E,
+		
+		/**
+		  * @brief	Opcode of the 'free memory' instruction
+		  */
+		opcode_free			= 0x1F,
+		
+		
+		
+		/**
 		  * @brief	Opcode of the 'jmp' instruction
 		  */ 
 		opcode_jmp			= 0x20,
