@@ -59,7 +59,7 @@ namespace machina
 			static const machina::arch::byte_t	pure_physical 	= 0x04;
 			
 			/**
-			  * @brief	Flag indicating a static-fixed block of memory (cannot freed)
+			  * @brief	Flag indicating a static-fixed block of memory (cannot be freed)
 			  * 		Should be used for initial memory containing program-code
 			  */
 			static const machina::arch::byte_t	static_fixed 	= 0x08;

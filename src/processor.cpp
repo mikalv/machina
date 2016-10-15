@@ -10,15 +10,15 @@ void processor::dump( FILE *output )
 {
 	fprintf(output,         "Machina processor dump:\n");
 	fprintf(output,         "  status:             0x%X          \n", this->status);
-	fprintf(output,         "  frame-stack size:   %lu           \n", this->frame_stack.size());
+	fprintf(output,         "  call-stack size:    %lu           \n", this->call_stack.size());
 	
-	if(this->frame_stack.empty())
+	if(this->call_stack.empty())
 	{
-		fprintf(output, "  frame-stack top:    (empty)       \n" );
+		fprintf(output, "  call-stack top:     (empty)       \n" );
 	}
 	else
 	{
-		fprintf(output, "  frame-stack top:    0x%.16lX      \n", this->frame_stack.top());
+		fprintf(output, "  call-stack top:     0x%.16lX      \n", this->call_stack.top());
 	}
 	
 	fprintf(output,         "  operand-stack size: %lu           \n", this->operand_stack.size());
@@ -37,18 +37,18 @@ void processor::trace( FILE *output )
 {
 	fprintf(output, "Machina processor frame-stack trace:\n");
 	
-	for(machina::arch::size_t index = 0; !this->frame_stack.empty(); index++)
+	for(machina::arch::size_t index = 0; !this->call_stack.empty(); index++)
 	{
 		try
 		{
-			fprintf(output, "  [%lu] 0x%.16lX  -->  0x%.16lX \n", index, this->frame_stack.top(), this->memory->read_int64(this->frame_stack.top()));
+			fprintf(output, "  [%lu] 0x%.16lX  -->  0x%.16lX \n", index, this->call_stack.top(), this->memory->read_int64(this->call_stack.top()));
 		}
 		catch(machina::exception::invalid_address &invadd)
 		{
-			fprintf(output, "  [%lu] 0x%.16lX  -->   (outside memory) \n", index, this->frame_stack.top());
+			fprintf(output, "  [%lu] 0x%.16lX  -->   (outside memory) \n", index, this->call_stack.top());
 		}
 		
-		this->frame_stack.pop();
+		this->call_stack.pop();
 	}
 }
 
@@ -132,7 +132,7 @@ void processor::step(  )
 		OP_CASE(free,                                    , machina::instruction_size_byte)
 		
 		/**
-		  * Control Unit operations 
+		  * Control operations 
 		  */
 		OP_CASE(jmp,            instr.operand_as_addr(), 0)
 		OP_CASE(jmpz,           instr.operand_as_addr(), 0)
@@ -149,9 +149,9 @@ void processor::step(  )
 		/**
 		  * Call-stack operations
 		  */
-		OP_CASE(frame,   instr.operand_as_int64(), machina::instruction_size_multibyte)
-		OP_CASE(obtain,  instr.operand_as_int64(), machina::instruction_size_multibyte)
-		OP_CASE(place,   instr.operand_as_int64(), machina::instruction_size_multibyte)
+		OP_CASE(setup,   instr.operand_as_int64(), machina::instruction_size_multibyte)
+		OP_CASE(get,     instr.operand_as_int64(), machina::instruction_size_multibyte)
+		OP_CASE(set,     instr.operand_as_int64(), machina::instruction_size_multibyte)
 		OP_CASE(cleanup, instr.operand_as_int64(), machina::instruction_size_multibyte)
 		
 		/**
@@ -281,7 +281,7 @@ void processor::step(  )
 		OP_CASE(swap,                         , machina::instruction_size_byte)
 		OP_CASE(rol,                          , machina::instruction_size_byte)
 		OP_CASE(roln, instr.operand_as_int64(), machina::instruction_size_multibyte)
-		OP_CASE(drop,                         , machina::instruction_size_byte)		
+		OP_CASE(drop,                         , machina::instruction_size_byte)
 		
 		/**
 		  * Output operations

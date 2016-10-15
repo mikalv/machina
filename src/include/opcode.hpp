@@ -772,19 +772,19 @@ namespace machina
 		
 		
 		/**
-		  * @brief	Opcode of the 'frame' instruction
+		  * @brief	Opcode of the 'setup' instruction
 		  */
-		opcode_frame			= 0xA0,
+		opcode_setup			= 0xA0,
 		
 		/**
-		  * @brief	Opcode of the 'obtain' instruction
+		  * @brief	Opcode of the 'get' instruction
 		  */
-		opcode_obtain			= 0xA1,
+		opcode_get			= 0xA1,
 		
 		/**
-		  * @brief	Opcode of the 'place' instruction
+		  * @brief	Opcode of the 'set' instruction
 		  */
-		opcode_place			= 0xA2,
+		opcode_set			= 0xA2,
 		
 		/**
 		  * @brief	Opcode of the 'cleanup' instruction

@@ -2,6 +2,6 @@
 
 void machina::processor::exec_ret(  )
 {
-	this->ip = this->frame_stack.top(); this->frame_stack.pop();
+	this->ip = this->call_stack.top(); this->call_stack.pop();
 }
  

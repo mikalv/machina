@@ -102,9 +102,9 @@ namespace machina
 			std::stack<machina::arch::int64_t>	operand_stack;
             
 			/**
-			  * @brief	The frame-stack of the processor
+			  * @brief	The call-stack of the processor
 			  */
-			std::stack<machina::arch::pointer_t>	frame_stack;
+			std::stack<machina::arch::pointer_t>	call_stack;
 			
 			/**
 			  * @brief	Connects the processor with the memory of the 'machina' virtual machine
@@ -839,25 +839,25 @@ namespace machina
 			
 			
 			/**
-			  * @brief	Executes the 'frame' instruction
+			  * @brief	Executes the 'setup' instruction
 			  *
-			  * @param	size			Size of the new stack frame
+			  * @param	size			Size of the new call-stack frame
 			  */ 
-			void exec_frame( machina::arch::size_t size );
+			void exec_setup( machina::arch::size_t size );
 			
 			/**
-			  * @brief	Executes the 'obtain' instruction
+			  * @brief	Executes the 'get' instruction
 			  *
 			  * @param	index			Index of the element on the stack
 			  */
-			void exec_obtain( machina::arch::size_t index );
+			void exec_get( machina::arch::size_t index );
 			
 			/**
-			  * @brief	Executes the 'place' instruction
+			  * @brief	Executes the 'set' instruction
 			  *
 			  * @param	index			Index of the element on the stack
 			  */
-			void exec_place( machina::arch::size_t index );
+			void exec_set( machina::arch::size_t index );
 			
 			/**
 			  * @brief	Executes the 'cleanup' instruction
